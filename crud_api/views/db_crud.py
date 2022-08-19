@@ -46,12 +46,14 @@ class DatabaseAPI(Resource):
         """Update a row in the table"""
         cursor = self.conn.cursor()
         params = request.get_json(force=True)
+        key = params.pop("_key")
+        value = params.pop("_value")
         query = (
             f"UPDATE {self.table} SET "
-            f"{', '.join([f'{key} = ?' for key in params.keys()])}"
-            f" WHERE id = ?"
+            f"{', '.join([f'{i} = ?' for i in params.keys()])}"
+            f" WHERE {key} = ?"
         )
-        cursor.execute(query, tuple(params.values()) + (params["id"],))
+        cursor.execute(query, tuple(params.values()) + (value,))
         self.conn.commit()
         return {"message": f"{self.table.title()} atualizado com sucesso!"}, 200
 
@@ -59,7 +61,9 @@ class DatabaseAPI(Resource):
         """Delete a row in the table"""
         cursor = self.conn.cursor()
         params = request.get_json(force=True)
-        query = f"DELETE FROM {self.table} WHERE id = ?"
-        cursor.execute(query, params["id"])
+        key = params.pop("_key")
+        value = params.pop("_value")
+        query = f"DELETE FROM {self.table} WHERE {key} = ?"
+        cursor.execute(query, value)
         self.conn.commit()
         return {"message": f"{self.table.title()} excluído com sucesso!"}, 200

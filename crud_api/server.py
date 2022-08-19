@@ -21,11 +21,28 @@ if __name__ == "__main__":
     api = Api(app)
 
     # Adding API paths
-    # api.add_resource(Piloto, "/piloto", resource_class_kwargs={"conn": conn})
-    # api.add_resource(Insumo, "/insumo", resource_class_kwargs={"conn": conn})
-    # api.add_resource(Tripulante, "/tripulante", resource_class_kwargs={"conn": conn})
-    api.add_resource(
-        DatabaseAPI, "/piloto", resource_class_kwargs={"conn": conn, "table": "piloto"}
-    )
+    tables_urls = {
+        "companhia_aerea": "/companhia_aerea",
+        "piloto": "/piloto",
+        "tripulante": "/tripulante",
+        "aeronave": "/aeronave",
+        "voo": "/voo",
+        "insumo": "/insumo",
+        "cartao_embarque": "/cartao_embarque",
+        "passageiro": "/passageiro",
+        "bagagem": "/bagagem",
+        "voo_piloto": "/voo_piloto",
+        "voo_tripulante": "/voo_tripulante",
+        "insumo_voo": "/insumo_voo",
+    }
+
+    for table, url in tables_urls.items():
+        print(f"Adding {table} to API, url: {url}")
+        api.add_resource(
+            DatabaseAPI,
+            url,
+            endpoint=table,
+            resource_class_kwargs={"conn": conn, "table": table},
+        )
 
     app.run()
