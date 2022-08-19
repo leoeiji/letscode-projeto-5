@@ -37,7 +37,6 @@ if __name__ == "__main__":
     }
 
     for table, url in tables_urls.items():
-        print(f"Adding {table} to API, url: {url}")
         api.add_resource(
             DatabaseAPI,
             url,

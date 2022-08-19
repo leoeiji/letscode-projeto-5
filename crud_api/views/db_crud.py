@@ -1,3 +1,5 @@
+import json
+
 import pyodbc
 from flask import request
 from flask_restful import Resource
@@ -24,7 +26,8 @@ class DatabaseAPI(Resource):
         cursor.execute(f"SELECT * FROM {self.table}")
         columns = [col[0] for col in cursor.description]
         rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
-        return rows
+        rngData = json.dumps(rows, indent=4, sort_keys=True, default=str)
+        return json.loads(rngData)
 
     def post(self):
         """Insert a new row in the table"""
