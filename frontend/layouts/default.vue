@@ -15,7 +15,12 @@
       clipped
       color="primary darken-1"
     >
-      <v-list dark>
+      <v-list dark class="fill-height">
+        <v-list-item
+          to="/"
+        >
+          Início
+        </v-list-item>
         <v-subheader class="pl-2">
           TABELAS
         </v-subheader>
@@ -27,6 +32,11 @@
           {{ index }}
         </v-list-item>
       </v-list>
+      <template #append>
+        <div class="d-flex justify-center align-center pb-1">
+          <img width="200px" src="~/static/gryffindor-logo.png" alt="LOGO">
+        </div>
+      </template>
     </v-navigation-drawer>
     <v-main>
       <v-container fluid>
@@ -45,7 +55,7 @@ export default {
         companhia_aerea: '/companhia_aerea',
         piloto: '/piloto',
         tripulante: '/tripulante',
-        voo: '/',
+        voo: '/voo',
         aeronave: '/aeronave',
         insumo: '/insumo',
         cartao_embarque: '/cartao_embarque',
